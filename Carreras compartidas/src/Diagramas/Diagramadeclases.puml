@@ -1,0 +1,25 @@
+@startuml
+abstract class Usuario 
+class Conductor
+class Pasajero 
+class Vehiculo 
+class Viaje{
+    +origen : string
+    +destino : string
+    +fecha : datetime
+    -calPrecio() : float
+} 
+class Reserva
+class Pago{
+    +esPago : boolean
+}
+Usuario --|> Conductor
+Usuario --|> Pasajero
+Conductor "1" -left- "1" Vehiculo
+Conductor "1" *-- "*" Viaje
+Pasajero "1" *-right- "*" Reserva
+Viaje "1" -- "1" Reserva
+Reserva "1" -left-* "1" Pago
+Pasajero "*" -left- "*" Viaje
+
+@enduml
