@@ -1,0 +1,72 @@
+@startuml
+    package Vista{
+        class FormPasajero
+        class FormConductor
+        class FormVehiculo
+        class FormViaje
+        class FormPago
+        class FormReserva
+    }
+
+    package Control{
+        class ControlViaje
+        class ControlPasajero
+        class ControlConductor
+        class ControlVehiculo
+        class ControlPago
+        class ControlReserva
+    }
+
+    package Modelo{
+        package Entidad{
+            abstract class Usuario 
+            class Conductor
+            class Pasajero 
+            class Vehiculo 
+            class Viaje{
+                +origen : string
+                +destino : string
+                +fecha : datetime
+                -calPrecio() : float
+            } 
+            class Reserva
+            class Pago{
+                +esPago : boolean
+            }
+        }
+        package Servicio{
+            class ServicioViaje
+            class ServicioConductor
+            class ServicioPasajero
+            class ServicioReserva
+            class ServicioVehiculo
+            class ServicioPago
+        }
+        package Persistencia{
+            class DaoViaje
+            class DaoPasajero
+            class DaoConductor
+            class DaoReserva
+            class DaoVehiculo
+            class DaoPago
+        }
+    }
+
+Vista ..> Control
+Control ..> Modelo
+ServicioViaje *-- DaoViaje
+ServicioConductor *-- DaoConductor
+ServicioPasajero *-- DaoPasajero
+ServicioReserva *-- DaoReserva
+ServicioPago *-- DaoPago
+ServicioVehiculo *-- DaoVehiculo
+Usuario -left-|> Conductor
+Usuario --|> Pasajero
+Conductor "1" -left- "1" Vehiculo
+Conductor "1" *-- "*" Viaje
+Pasajero "1" *-- "*" Reserva
+Viaje "1" -- "1" Reserva
+Reserva "1" -left-* "1" Pago
+Pasajero "*" -left- "*" Viaje
+
+@enduml
